@@ -1,0 +1,110 @@
+
+
+
+Install Ubuntu LTS 14.04
+*When installing install ssh server
+
+
+UPDATE AND UPGRADE SERVER
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+Install FTP Server
+sudo apt-get install vsftpd
+
+MODIFY FTP SERVER TO ACCEPT CHANGES
+
+sudo nano /etc/vsftpd.conf
+local_enable=YES
+write_enable=YES
+
+sudo /etc/init.d/vsftpd restart
+
+
+APACHE
+sudo apt-get install apache2
+
+
+MYSQL
+
+sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+
+sudo mysql_install_db
+
+sudo /usr/bin/mysql_secure_installation
+
+Enter current password for root (enter for none): 
+OK, successfully used password, moving on...
+
+
+
+
+PHP
+
+sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt  
+
+(Make sure it is php5 5.4 or later)
+
+
+
+
+Rewrite the directory file:
+
+sudo nano /etc/apache2/mods-enabled/dir.conf
+
+
+
+
+Add index.php to the beginning of index files. The page should now look like this: 
+<IfModule mod_dir.c>
+
+          DirectoryIndex index.php index.html index.cgi index.pl index.php index.xhtml index.htm
+
+</IfModule>
+Install PHP Modules
+
+
+sudo apt-get install php-common php5-MySQL
+
+
+SET UP PHP ON SERVER
+sudo nano /var/www/info.php
+INSERT THE FOLLOWING LINES:
+<?php
+phpinfo();
+?>
+SET UP IP ADDRESS IN SERVER
+sudo nano /etc/network/interfaces
+Change the line iface eth0 inet dhcp to iface eth0 inet static and add the following just below it:
+address 192.168.1.100 (IP address of what you want your Ubuntu machine to be)
+ netmask 255.255.255.0 (Default mask which in this case is the default class c subnet)
+ gateway 192.168.1.1  (Typically your router’s IP address)
+ network 192.168.1.0 (The network that this machine is running on)
+ broadcast 192.168.1.255 (A message that is sent to all out network-attached hosts to essentially find a specific address. You also receive them from other hosts)
+ dns-nameservers 192.168.1.1
+ 8.8.8.8 (DNS or Domain Name Server used for responding to queries when you are searching for a website)
+
+
+sudo service networking restart
+
+
+SET UP THE CURL POPPLER AND OTHER LIBRARIES
+
+
+sudo apt-get install poppler-utils
+sudo apt-get install curl libcurl3 libcurl3-dev php5-curl
+sudo apt-get install aria2
+sudo apt-get install tesseract-ocr 
+sudo apt-get install imagemagick
+sudo chmod -R 777 /var/www
+
+SET UP THE DEBUGGING 
+use the following commands to debug
+grep -i 'DocumentRoot' /etc/apache2/sites-available/*
+sudo tail -F /var/log/apache2/error.log
+sudo tail -F /var/log/apache2/access.log
+
+
+sudo tail -100 /var/log/apache2/error.log to see the last 100 lines

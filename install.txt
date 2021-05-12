@@ -1,0 +1,9 @@
+Hi Bill, I believe these commands can be run on a fresh install and it should configure and set everything up properly:
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install php5 apache2 libapache2-mod-php5 mysql-server php5-mysql phpmyadmin aria2 poppler-utils curl php5-curl imagemagick tesseract-ocr zip
+sudo chown -R www-data:www-data /var/www/
+sudo chmod -R 755 /var/www/
+
+I cannot connect to the paid instance, is there a rule you have to set in the Amazon Web Services Console to allow access?
